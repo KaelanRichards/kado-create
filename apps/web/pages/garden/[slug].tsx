@@ -6,6 +6,7 @@ import {
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { join } from 'path';
 import { ParsedUrlQuery } from 'querystring';
+import { MDXRemote } from 'next-mdx-remote';
 
 export interface GardenProps extends ParsedUrlQuery {
   slug: string;
@@ -13,7 +14,7 @@ export interface GardenProps extends ParsedUrlQuery {
 
 const POSTS_PATH = join(process.cwd(), '_posts');
 
-export function Garden({ frontMatter }) {
+export function Garden({ frontMatter, html }) {
   console.log(join(__dirname, 'tailwind.config.js'));
 
   return (
@@ -22,6 +23,8 @@ export function Garden({ frontMatter }) {
         <h1>{frontMatter.title}</h1>
         <p>{frontMatter.date}</p>
       </article>
+      <hr />
+      <MDXRemote {...html} />
     </div>
   );
 }
@@ -35,11 +38,12 @@ export const getStaticProps: GetStaticProps = async ({
 
   const postMarkdownContent = getParsedFileContentBySlug(slug, POSTS_PATH);
 
-  // const renderHtml = renderMarkdown(postMarkdownContent);
+  const renderHtml = await renderMarkdown(postMarkdownContent.content);
 
   return {
     props: {
       frontMatter: postMarkdownContent.frontMatter,
+      html: renderHtml,
     },
   };
 };

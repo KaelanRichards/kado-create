@@ -1,11 +1,14 @@
 import { readFileSync } from 'fs';
 import matter from 'gray-matter';
 import { join } from 'path';
+import { MarkdownDocument } from './types';
+
+import { serialize } from 'next-mdx-remote/serialize';
 
 export const getParsedFileContentBySlug = (
   fileName: string,
   postPath: string
-) => {
+): MarkdownDocument => {
   const fullPath = join(postPath, `${fileName}.md`);
   const fileContent = readFileSync(fullPath);
 
@@ -14,6 +17,6 @@ export const getParsedFileContentBySlug = (
   return { frontMatter: data, content };
 };
 
-export function renderMarkdown(): string {
-  return 'markdown';
+export function renderMarkdown(markdownContent: string) {
+  return serialize(markdownContent || '');
 }
