@@ -16,7 +16,10 @@
     "baseUrl": ".",
     "types": ["node"],
     "paths": {
-      "@kado-create/markdown": ["libs/markdown/src/index.ts"]
+      "@kado-create/markdown": ["libs/markdown/src/index.ts"],
+      "@kado-create/shared/mdx-elements": [
+        "libs/shared/mdx-elements/src/index.ts"
+      ]
     },
     "allowSyntheticDefaultImports": true
   },
