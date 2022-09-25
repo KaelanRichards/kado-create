@@ -1,16 +1,18 @@
+import { readdirSync } from 'fs';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { join } from 'path';
 import { ParsedUrlQuery } from 'querystring';
-import styles from './index.module.css';
 
-/* eslint-disable-next-line */
 export interface GardenProps extends ParsedUrlQuery {
   slug: string;
 }
 
+const POSTS_PATH = join(process.cwd(), '_posts');
+
 export function Garden(props: GardenProps) {
   const { slug } = props;
   return (
-    <div className={styles['container']}>
+    <div>
       <h1>Welcome to {slug} page!</h1>
     </div>
   );
@@ -21,27 +23,24 @@ export const getStaticProps: GetStaticProps = async ({
 }: {
   params: GardenProps;
 }) => {
+  const { slug } = params;
+
   return {
     props: {
-      slug: params.slug,
+      slug: slug,
     },
   };
 };
 
 export const getStaticPaths: GetStaticPaths<GardenProps> = async () => {
+  const paths = readdirSync(POSTS_PATH).map((file) => ({
+    params: {
+      slug: file.replace(/\.mdx?$/, ''),
+    },
+  }));
+
   return {
-    paths: [
-      {
-        params: {
-          slug: 'garden',
-        },
-      },
-      {
-        params: {
-          slug: 'garden2',
-        },
-      },
-    ],
+    paths: paths,
     fallback: false,
   };
 };
