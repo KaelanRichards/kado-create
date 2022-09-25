@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "types": ["node"],
+    "paths": {
+      "@kado-create/markdown": ["libs/markdown/src/index.ts"]
+    },
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules", "tmp"]
 }
