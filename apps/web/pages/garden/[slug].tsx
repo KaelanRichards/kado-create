@@ -14,6 +14,8 @@ export interface GardenProps extends ParsedUrlQuery {
 const POSTS_PATH = join(process.cwd(), '_posts');
 
 export function Garden({ frontMatter }) {
+  console.log(join(__dirname, 'tailwind.config.js'));
+
   return (
     <div className="m-6">
       <article className="prose prose-lg">
