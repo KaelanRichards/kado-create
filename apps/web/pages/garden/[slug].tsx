@@ -7,17 +7,19 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import { join } from 'path';
 import { ParsedUrlQuery } from 'querystring';
 import { MDXRemote } from 'next-mdx-remote';
-import { Youtube } from '@kado-create/shared/mdx-elements';
+import dynamic from 'next/dynamic';
+import { Youtube, CustomLink } from '@kado-create/shared/mdx-elements';
 
 export interface GardenProps extends ParsedUrlQuery {
   slug: string;
 }
 
 const mdxElements = {
-  Youtube,
+  Youtube: dynamic(() => Promise.resolve(Youtube)),
+  a: CustomLink,
 };
 
-const POSTS_PATH = join(process.cwd(), '_posts');
+const POSTS_PATH = join(process.cwd(), process.env.postsMarkdownPath);
 
 export function Garden({ frontMatter, html }) {
   return (
