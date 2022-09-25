@@ -25,7 +25,7 @@ export function Garden({ frontMatter, html }) {
   return (
     <div className="m-6">
       <article className="prose prose-lg">
-        <h1>{frontMatter.title}</h1>
+        <h1 className="text-4xl font-bold">{frontMatter.title}</h1>
         <p>{frontMatter.date}</p>
       </article>
       <hr />
